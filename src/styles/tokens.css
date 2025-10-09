@@ -1,0 +1,133 @@
+:root {
+  /* fondos */
+  --bg-app: #f6f7fb;        
+  --bg-panel: #ffffff;      
+  --bg-muted: #f1f5f9;      
+
+  /* texto y bordes */
+  --text: #0f172a;
+  --text-muted: #64748b;
+  --border: #e5e7eb;
+
+  /* acentos */
+  --accent: #4f46e5;
+  --accent-ghost: #eef2ff;
+  --success: #16a34a;
+  --warning: #f59e0b;
+
+  /* efectos */
+  --shadow: 0 10px 24px rgba(2,6,23,.06);
+  --transition-fast: 160ms ease;
+
+    /* pills (recursos de la fila) */
+  --pill-success-bg: #e7fbe8;
+  --pill-success-text: #166534;
+  --pill-success-border: #16a34a;
+
+  --pill-warn-bg: #fff3c2;
+  --pill-warn-text: #92400e;
+  --pill-warn-border: #f59e0b;
+
+  --pill-pending-bg: var(--bg-muted);
+  --pill-pending-text: var(--text);
+  --pill-pending-border: var(--border);
+
+  /* badges del estado del proceso */
+  --badge-ready-bg: #e6efff;
+  --badge-ready-text: #1d4ed8;
+  --badge-wait-bg: #ffe9bd;
+  --badge-wait-text: #9a3412;
+  --badge-done-bg: #dffbe7;
+  --badge-done-text: #166534;
+
+  /* contorno */
+  --proc-wait-outline: #f59e0b66; 
+
+  --overlay: rgba(2, 6, 23, .55);   
+
+    /* Tabla (tema claro) */
+  --tbl-border:        #e5e7eb;     /* separador de filas */
+  --tbl-border-strong: #d1d5db;     /* borde exterior / cabecera */
+  --tbl-stripe:        rgba(2,6,23,.02);
+  --tbl-row-hover:     rgba(79,70,229,.06);
+  --tbl-head-bg:       #f8fafc;
+  --tbl-head-text:     #0f172a;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-app: #0a0f1a;
+    --bg-panel: #0f1625;
+    --bg-muted: #0c1220;
+
+    --text: #e5e7eb;
+    --text-muted: #94a3b8;
+    --border: #1f2a44;
+
+    --accent: #8b93ff;
+    --accent-ghost: #121a38;
+
+    --success: #22c55e;
+    --warning: #fbbf24;
+
+    --shadow: 0 10px 24px rgba(0,0,0,.35);
+
+        /* Tabla (oscuro por preferencia SO) */
+    --tbl-border:        #24324a;
+    --tbl-border-strong: #314569;
+    --tbl-stripe:        rgba(255,255,255,.02);
+    --tbl-row-hover:     rgba(139,147,255,.10);
+    --tbl-head-bg:       #0f1625;
+    --tbl-head-text:     #e5e7eb;
+  }
+}
+
+/* Tema oscuro */
+:root[data-theme="dark"] {
+  --bg-app: #0a0f1a;
+  --bg-panel: #0f1625;
+  --bg-muted: #0c1220;
+
+  --text: #e5e7eb;
+  --text-muted: #94a3b8;
+  --border: #1f2a44;
+
+  --accent: #8b93ff;
+  --accent-ghost: #121a38;
+
+  --success: #22c55e;
+  --warning: #fbbf24;
+
+  --shadow: 0 10px 24px rgba(0,0,0,.35);
+
+  --pill-success-bg: #0f2f23;    
+  --pill-success-text: #a7f3d0;  
+  --pill-success-border: #22c55e;
+
+  --pill-warn-bg: #36260a;       
+  --pill-warn-text: #fde68a;     
+  --pill-warn-border: #f59e0b;
+
+  --pill-pending-bg: #131a2a;
+  --pill-pending-text: #cbd5e1;
+  --pill-pending-border: #24324a;
+
+  /* badges del estado del proceso */
+  --badge-ready-bg: #12253f;
+  --badge-ready-text: #93c5fd;
+  --badge-wait-bg: #3a2a0b;
+  --badge-wait-text: #fcd34d;
+  --badge-done-bg: #0f2f23;
+  --badge-done-text: #86efac;
+
+  --proc-wait-outline: #f59e0b66;
+
+  --overlay: rgba(0, 0, 0, .65);    
+
+    --tbl-border:        #24324a;
+  --tbl-border-strong: #314569;
+  --tbl-stripe:        rgba(255,255,255,.02);
+  --tbl-row-hover:     rgba(139,147,255,.10);
+  --tbl-head-bg:       #0f1625;
+  --tbl-head-text:     #e5e7eb;
+}

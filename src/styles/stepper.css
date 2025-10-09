@@ -1,0 +1,68 @@
+.stepper {
+  display: grid;
+  gap: 12px;
+  padding: 24px 16px;
+  background: var(--bg-panel);
+  border-right: 1px solid var(--border);
+}
+
+.step {
+  position: relative;
+  display: grid;
+  grid-template-columns: 40px 1fr;
+  align-items: start;
+  gap: 12px;
+  padding-right: 8px;
+}
+
+.step::before {
+  content: '';
+  position: absolute;
+  left: 20px;           /* centro del icono */
+  top: 40px;            /* debajo del icono */
+  width: 2px;
+  height: calc(100% - 40px);
+  background: var(--border);
+}
+
+.step:last-child::before { display: none; }
+
+.step__icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 999px;
+  display: grid;
+  place-items: center;
+  background: var(--bg-muted);
+  border: 1px solid var(--border);
+  color: var(--text-muted);
+}
+
+.step--active .step__icon {
+  background: var(--accent-ghost);
+  border-color: var(--accent);
+  color: var(--accent);
+  box-shadow: 0 0 0 4px color-mix(in oklab, var(--accent) 15%, transparent);
+}
+
+.step--done .step__icon {
+  background: color-mix(in oklab, var(--success) 12%, var(--bg-panel));
+  border-color: color-mix(in oklab, var(--success) 40%, var(--border));
+  color: var(--success);
+}
+
+.step__content a {
+  color: var(--text);
+  text-decoration: none;
+  font-weight: 600;
+}
+.step__content a[aria-current="step"] { color: var(--accent); }
+
+.step__desc {
+  margin-top: 2px;
+  color: var(--text-muted);
+  font-size: 12px;
+}
+
+/* hover */
+.step__content a:hover { text-decoration: underline; }
