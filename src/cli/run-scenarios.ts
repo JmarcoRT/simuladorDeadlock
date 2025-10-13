@@ -34,7 +34,7 @@ function scenarioOf(
     processes,
     algorithm,
     preventionPriority,
-    speedMs: 1, // requerido por el tipo, irrelevante en modo consola
+    speedMs: 1, 
   } as Scenario;
 }
 
@@ -44,7 +44,7 @@ function scenarioOf(
 
 type RunOptions = {
   maxTicks?: number;
-  autoAbortOnDeadlock?: boolean; // si true, aborta una victima y continua
+  autoAbortOnDeadlock?: boolean; 
 };
 
 function runScenario(label: string, sc: Scenario, opts: RunOptions = {}) {
@@ -92,17 +92,16 @@ function runScenario(label: string, sc: Scenario, opts: RunOptions = {}) {
   console.log(`Esperas (wait): ${m.waitEvents}`);
   console.log(`Reordenes por prevencion: ${m.reorderEvents}`);
   console.log(`Denegados por inseguridad: ${m.deniedUnsafe}`);
-  console.log(`Preemptions totales: ${m.preemptionsTotal}`);
   console.log('----------------------------------------\n');
 }
 
 /* -----------------------------
-   Suite 1: Ciclo simple (2 procesos, 2 recursos)
+   Escenario 1: Ciclo simple (2 procesos, 2 recursos)
    3 pruebas preestablecidas
 -------------------------------- */
 
 function suiteSimpleCycle() {
-  console.log('\n=== Suite 1: Ciclo simple (2 procesos, 2 recursos) ===\n');
+  console.log('\n=== Escenario 1: Ciclo simple (2 procesos, 2 recursos) ===\n');
 
   // Prueba 1: ciclo clasico que provoca deadlock (Deteccion)
   const sc1 = scenarioOf(
@@ -115,36 +114,37 @@ function suiteSimpleCycle() {
   );
   runScenario('S1-P1: ciclo clasico (deteccion)', sc1, { autoAbortOnDeadlock: true });
 
-  // Prueba 2: mismo ciclo pero con orden inicial invertido en p1
+  // Prueba 2: mismo ciclo pero con prevencion
   const sc2 = scenarioOf(
     [res('CPU', 1), res('DISK', 1)],
     [
       proc('p1', 'proceso_1', ['DISK', 'CPU']),
-      proc('p2', 'proceso_2', ['DISK', 'CPU']),
+      proc('p2', 'proceso_2', ['CPU', 'DISK']),
     ],
-    'DETECTION',
+    'PREVENTION',
+    ['CPU', 'DISK'], // prioridad/orden global de recursos
   );
-  runScenario('S1-P2: variante simetrica (deteccion)', sc2, { autoAbortOnDeadlock: true });
+  runScenario('S1-P2: variante con prevencion', sc2, { autoAbortOnDeadlock: true });
 
   // Prueba 3: aumenta la capacidad de DISK a 2 (no deberia haber deadlock)
   const sc3 = scenarioOf(
-    [res('CPU', 1), res('DISK', 2)],
+    [res('CPU', 1), res('DISK', 1)],
     [
       proc('p1', 'proceso_1', ['CPU', 'DISK']),
       proc('p2', 'proceso_2', ['DISK', 'CPU']),
     ],
-    'DETECTION',
+    'AVOIDANCE',
   );
-  runScenario('S1-P3: capacidad evita bloqueo (deteccion)', sc3, { autoAbortOnDeadlock: true });
+  runScenario('S1-P3: variante con evitacion', sc3, { autoAbortOnDeadlock: true });
 }
 
 /* -----------------------------
-   Suite 2: Ciclos complejos con multiples recursos
+   Escenario 2: Ciclos complejos con multiples recursos
    3 pruebas preestablecidas
 -------------------------------- */
 
 function suiteComplexCycle() {
-  console.log('\n=== Suite 2: Ciclos complejos con multiples recursos ===\n');
+  console.log('\n=== Escenario 2: Ciclos complejos con multiples recursos ===\n');
 
   // Prueba 1: ciclo de 3 procesos y 3 recursos (Deteccion)
   // p1: CPU -> DISK, p2: DISK -> MUTEX, p3: MUTEX -> CPU  -> ciclo
@@ -187,52 +187,53 @@ function suiteComplexCycle() {
 }
 
 /* -----------------------------
-   Suite 3: Escenarios de escasez bajo alta demanda
+   Escenario 3: Recursos escasos bajo alta demanda
    3 pruebas preestablecidas
 -------------------------------- */
 
 function suiteScarcity() {
-  console.log('\n=== Suite 3: Escasez bajo alta demanda ===\n');
+  console.log('\n=== Escenario 3: Escasez bajo alta demanda ===\n');
 
-  // Prueba 1: 4 procesos compiten por CPU y DISK (Deteccion)
+  // Prueba 1: 4 procesos compiten por CPU y DISK (prevencion)
   const sc1 = scenarioOf(
     [res('CPU', 1), res('DISK', 1)],
     [
-      proc('p1', 'proceso_1', ['CPU', 'DISK']),
-      proc('p2', 'proceso_2', ['CPU', 'DISK']),
+      proc('p1', 'proceso_1', ['CPU', 'DISK']), // A: CPU→DISK
+      proc('p2', 'proceso_2', ['DISK', 'CPU']), // B: DISK→CPU  ← ciclo A↔B posible
       proc('p3', 'proceso_3', ['CPU', 'DISK']),
-      proc('p4', 'proceso_4', ['CPU', 'DISK']),
+      proc('p4', 'proceso_4', ['DISK', 'CPU']),
     ],
-    'DETECTION',
+   'PREVENTION',
+    ['CPU', 'DISK'],
   );
-  runScenario('S3-P1: 4 proc vs 2 recursos (deteccion)', sc1, { autoAbortOnDeadlock: true });
+  runScenario('S3-P1 (revisada): ordenes cruzados (deteccion)', sc1, { autoAbortOnDeadlock: true });
 
   // Prueba 2: misma carga, se agrega MUTEX al flujo para todos
   const sc2 = scenarioOf(
     [res('CPU', 1), res('DISK', 1), res('MUTEX', 1)],
     [
-      proc('p1', 'proceso_1', ['CPU', 'MUTEX', 'DISK']),
-      proc('p2', 'proceso_2', ['CPU', 'MUTEX', 'DISK']),
-      proc('p3', 'proceso_3', ['CPU', 'MUTEX', 'DISK']),
+      proc('p1', 'proceso_1', ['CPU', 'MUTEX', 'DISK']),   // A: CPU→MUTEX→DISK
+      proc('p2', 'proceso_2', ['MUTEX', 'DISK', 'CPU']),   // B: MUTEX→DISK→CPU
+      proc('p3', 'proceso_3', ['DISK', 'CPU', 'MUTEX']),   // C: DISK→CPU→MUTEX
       proc('p4', 'proceso_4', ['CPU', 'MUTEX', 'DISK']),
     ],
-    'DETECTION',
+    'AVOIDANCE',
   );
-  runScenario('S3-P2: 4 proc con mutex extra (deteccion)', sc2, { autoAbortOnDeadlock: true });
+  runScenario('S3-P2 (revisada): ciclo de 3 (evitacion)', sc2, { autoAbortOnDeadlock: true });
 
   // Prueba 3: misma carga con PREVENTION y prioridad que reduce contencion
   const sc3 = scenarioOf(
     [res('CPU', 1), res('DISK', 1), res('MUTEX', 1)],
     [
       proc('p1', 'proceso_1', ['CPU', 'MUTEX', 'DISK']),
-      proc('p2', 'proceso_2', ['CPU', 'MUTEX', 'DISK']),
-      proc('p3', 'proceso_3', ['CPU', 'MUTEX', 'DISK']),
+      proc('p2', 'proceso_2', ['MUTEX', 'DISK', 'CPU']),
+      proc('p3', 'proceso_3', ['DISK', 'CPU', 'MUTEX']),
       proc('p4', 'proceso_4', ['CPU', 'MUTEX', 'DISK']),
     ],
     'PREVENTION',
-    ['CPU', 'MUTEX', 'DISK'],
+    ['CPU', 'MUTEX', 'DISK'], // orden total impide espera circular
   );
-  runScenario('S3-P3: prevencion en escasez (prevention)', sc3, { autoAbortOnDeadlock: true });
+  runScenario('S3-P3 (revisada): prevencion rompe el ciclo', sc3, { autoAbortOnDeadlock: true });
 }
 
 /* -----------------------------
@@ -243,7 +244,7 @@ function main() {
   suiteSimpleCycle();
   suiteComplexCycle();
   suiteScarcity();
-  console.log('\nFin de pruebas headless.\n');
+  console.log('\nFin de las pruebas.\n');
 }
 
 main();
