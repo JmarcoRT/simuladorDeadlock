@@ -26,12 +26,15 @@ La finalidad es que puedas tener una idea representativa de como internamente se
 
 ## Ejemplo de uso
 -Definir recursos y 4 procesos que generan deadlocks
-<img width="1920" height="952" alt="image" src="https://github.com/user-attachments/assets/fe1ced2f-17b8-4edf-83b3-53afb5e5dbfc" />
+<img width="1920" height="958" alt="image" src="https://github.com/user-attachments/assets/958cc4ef-a794-47b8-94e4-a68816865e25" />
 
 -Observar asignacion de recursos hasta la ocurrencia del deadlocks
-<img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/7d7321b5-9e99-4343-849f-cebff2dac742" />
+<img width="1920" height="952" alt="image" src="https://github.com/user-attachments/assets/fe1ced2f-17b8-4edf-83b3-53afb5e5dbfc" />
 
 -Ver grafo de asignación (deadlock presente)
+<img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/7d7321b5-9e99-4343-849f-cebff2dac742" />
+
+-Ver estado de matrices (algoritmo del Banquero)
 <img width="1920" height="954" alt="image" src="https://github.com/user-attachments/assets/49e3fa0d-198e-4238-b534-d735a0ed0163" />
 
 -Seleccionar estrategia de manejo y ver resultados
