@@ -28,3 +28,4 @@ La finalidad es que puedas tener una idea representativa de como internamente se
 
 <img width="1920" height="950" alt="image" src="https://github.com/user-attachments/assets/8eaa7d60-3187-4211-8f3b-5a2b1d399648" />
 
+<img width="1920" height="951" alt="image" src="https://github.com/user-attachments/assets/3565b98d-efc6-4516-abd4-738775628680" />
