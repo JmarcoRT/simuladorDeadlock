@@ -25,7 +25,16 @@ La finalidad es que puedas tener una idea representativa de como internamente se
 4. Observa la evolución del sistema en el grafo y los resultados finales.
 
 ## Ejemplo de uso
+-Definir recursos y 4 procesos que generan deadlocks
+<img width="1920" height="952" alt="image" src="https://github.com/user-attachments/assets/fe1ced2f-17b8-4edf-83b3-53afb5e5dbfc" />
 
-<img width="1920" height="950" alt="image" src="https://github.com/user-attachments/assets/8eaa7d60-3187-4211-8f3b-5a2b1d399648" />
+-Observar asignacion de recursos hasta la ocurrencia del deadlocks
+<img width="1920" height="953" alt="image" src="https://github.com/user-attachments/assets/7d7321b5-9e99-4343-849f-cebff2dac742" />
 
-<img width="1920" height="951" alt="image" src="https://github.com/user-attachments/assets/3565b98d-efc6-4516-abd4-738775628680" />
+-Ver grafo de asignación (deadlock presente)
+<img width="1920" height="954" alt="image" src="https://github.com/user-attachments/assets/49e3fa0d-198e-4238-b534-d735a0ed0163" />
+
+-Seleccionar estrategia de manejo y ver resultados
+<img width="1920" height="955" alt="image" src="https://github.com/user-attachments/assets/a7cb9713-6815-4630-acaa-cd0df39103a7" />
+
+
