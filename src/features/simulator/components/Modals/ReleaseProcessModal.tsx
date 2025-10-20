@@ -2,6 +2,7 @@ import React from 'react';
 import { Modal } from '../../../../ui/Modal';
 import type { Session } from '../../engine/session';
 import { KIND_LABELS } from '../../domain/constants';
+import type { ResourceKind } from '../../domain/types';
 
 export const ReleaseProcessModal: React.FC<{
   open: boolean;
@@ -29,7 +30,7 @@ export const ReleaseProcessModal: React.FC<{
                     {' · '}
                     Sostiene: {Object.keys(p.holding).length
                       ? Object.entries(p.holding)
-                          .map(([k, v]) => `${KIND_LABELS[k as any]}(${v})`)
+                          .map(([k, v]) => `${KIND_LABELS[k as ResourceKind]}(${v})`)
                           .join(', ')
                       : '—'}
                   </div>

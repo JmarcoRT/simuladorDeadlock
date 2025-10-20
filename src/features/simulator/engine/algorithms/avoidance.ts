@@ -162,7 +162,7 @@ export function simulateGrantAndCheckSafe(
   procId: string,
   kind: ResourceKind
 ): { safe: boolean; trace: SafetyTrace } {
-  const { kinds, procIds, total, available, allocation, max, need } = buildMatrices(session);
+  const { procIds, total, available, allocation, max, need } = buildMatrices(session);
 
   // Datos del proceso
   const p = session.procs.find(x => x.id === procId)!;
@@ -246,7 +246,7 @@ export function simulateGrantAndCheckSafe(
 }
 
 // ---------- Compatibilidad con tu import actual ----------
-export function isSafeAfterGrant(hypothetical: Session, _procId: string, _kind: ResourceKind): boolean {
+export function isSafeAfterGrant(hypothetical: Session): boolean {
   // Usa las matrices y corre el safety check
   const m = buildMatrices(hypothetical);
   const sc = safetyCheck(m.available, m.allocation, m.need, m.procIds);
